@@ -4,8 +4,7 @@ import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
-  const { cartCount, user, isAdmin, logout } = useApp();
-  const location = useLocation();
+  const { cartCount, authUser, isAdmin, signOut } = useApp();
 
   return (
     <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border">
@@ -16,7 +15,7 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center gap-2">
-          {user && !isAdmin && (
+          {authUser && !isAdmin && (
             <Link to="/orders">
               <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground">
                 <Package className="w-4 h-4" />
@@ -44,8 +43,8 @@ const Header = () => {
               </Button>
             </Link>
           )}
-          {user ? (
-            <Button variant="ghost" size="sm" onClick={logout} className="gap-1.5 text-muted-foreground">
+          {authUser ? (
+            <Button variant="ghost" size="sm" onClick={() => signOut()} className="gap-1.5 text-muted-foreground">
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">Logout</span>
             </Button>
