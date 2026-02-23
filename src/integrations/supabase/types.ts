@@ -14,16 +14,182 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      order_items: {
+        Row: {
+          count: number
+          id: string
+          order_id: string
+          price: number
+          product_id: string
+          product_image: string
+          product_name: string
+        }
+        Insert: {
+          count?: number
+          id?: string
+          order_id: string
+          price: number
+          product_id: string
+          product_image?: string
+          product_name: string
+        }
+        Update: {
+          count?: number
+          id?: string
+          order_id?: string
+          price?: number
+          product_id?: string
+          product_image?: string
+          product_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          address: string
+          created_at: string
+          customer_name: string
+          customer_phone: string
+          delivery_charge: number
+          id: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          status: Database["public"]["Enums"]["order_status"]
+          total: number
+          user_id: string
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          delivery_charge?: number
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          status?: Database["public"]["Enums"]["order_status"]
+          total: number
+          user_id: string
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          customer_name?: string
+          customer_phone?: string
+          delivery_charge?: number
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          status?: Database["public"]["Enums"]["order_status"]
+          total?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          image: string
+          in_stock: boolean
+          name: string
+          price: number
+          quantity: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          id?: string
+          image?: string
+          in_stock?: boolean
+          name: string
+          price: number
+          quantity?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          image?: string
+          in_stock?: boolean
+          name?: string
+          price?: number
+          quantity?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string
+          created_at: string
+          id: string
+          name: string
+          phone: string
+        }
+        Insert: {
+          address?: string
+          created_at?: string
+          id: string
+          name?: string
+          phone?: string
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          id?: string
+          name?: string
+          phone?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      order_status: "placed" | "packed" | "out_for_delivery" | "delivered"
+      payment_method: "cod" | "upi"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +316,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      order_status: ["placed", "packed", "out_for_delivery", "delivered"],
+      payment_method: ["cod", "upi"],
+    },
   },
 } as const
