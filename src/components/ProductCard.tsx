@@ -2,6 +2,7 @@ import { Product } from '@/types/grocery';
 import { useApp } from '@/contexts/AppContext';
 import { Button } from '@/components/ui/button';
 import { Plus, Minus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   product: Product;
@@ -14,13 +15,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <div className="bg-card rounded-lg p-3 card-elevated flex flex-col animate-fade-in">
-      <div className="text-5xl text-center py-4 bg-fresh-light rounded-lg mb-3">
-        {product.image}
-      </div>
-      <div className="flex-1">
-        <h3 className="font-semibold text-sm text-card-foreground leading-tight">{product.name}</h3>
-        <p className="text-xs text-muted-foreground mt-0.5">{product.quantity}</p>
-      </div>
+      <Link to={`/product/${product.id}`}>
+        <div className="text-5xl text-center py-4 bg-fresh-light rounded-lg mb-3 hover:scale-105 transition-transform">
+          {product.image}
+        </div>
+        <div className="flex-1">
+          <h3 className="font-semibold text-sm text-card-foreground leading-tight">{product.name}</h3>
+          <p className="text-xs text-muted-foreground mt-0.5">{product.quantity}</p>
+        </div>
+      </Link>
       <div className="flex items-center justify-between mt-3">
         <span className="font-bold text-foreground">₹{product.price}</span>
         {!product.inStock ? (
