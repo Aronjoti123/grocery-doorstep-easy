@@ -119,6 +119,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         category: p.category as Product['category'],
         image: p.image,
         inStock: p.in_stock,
+        description: (p as any).description || '',
       })));
     }
     setLoadingProducts(false);
