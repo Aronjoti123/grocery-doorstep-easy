@@ -22,14 +22,21 @@ const App = () => (
       <AppProvider>
         <Toaster />
         <Sonner />
+
         <HashRouter>
           <Header />
+
           <Routes>
-            {/* Open login page directly */}
+            {/* First open login page */}
             <Route path="/" element={<Navigate to="/login" replace />} />
 
+            {/* Login page */}
             <Route path="/login" element={<LoginPage />} />
+
+            {/* After login go here */}
             <Route path="/home" element={<Index />} />
+
+            {/* Other pages */}
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/order/:id" element={<OrderTrackingPage />} />
@@ -37,7 +44,7 @@ const App = () => (
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/admin" element={<AdminPage />} />
 
-            {/* Wrong URL goes to login */}
+            {/* Wrong link goes login */}
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </HashRouter>
